@@ -21,11 +21,13 @@ qt_add_resources(The300CounterApp "configuration"
         qtquickcontrols2.conf
 )
 
+add_subdirectory(fizz_buzz_module)
 target_link_libraries(The300CounterApp PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    fizzBuzzModulePlugin
 )
 
 if (BUILD_QDS_COMPONENTS)

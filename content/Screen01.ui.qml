@@ -10,11 +10,15 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import The300Counter
+import fizzBuzzModule
 
 ColumnLayout {
     id: root
     width: Constants.width
     height: Constants.height
+    FizzBuzzObject{
+        id: fizzbuzzObject
+    }
 
     ColumnLayout {
         id: inputsLayout
@@ -57,6 +61,7 @@ ColumnLayout {
 
     ResultsTable {
         id: results
+        fizzBuzz: fizzbuzzObject
         Layout.fillHeight: true
         Layout.fillWidth: true
         visible: false
@@ -71,8 +76,13 @@ ColumnLayout {
     Connections {
         target: submitButton
         function onClicked() {
+            fizzbuzzObject.postFizzBuzz()
             results.visible = true
             placeHolder.visible = false
+
         }
     }
+
+    Binding{fizzbuzzObject.fizz: fizzInputField.inputFieldText}
+    Binding{fizzbuzzObject.buzz: buzzInputField.inputFieldText}
 }

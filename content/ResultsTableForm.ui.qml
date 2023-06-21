@@ -9,11 +9,14 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import Qt.labs.qmlmodels
+import fizzBuzzModule
 
 Rectangle {
+    property alias fizzBuzz: fizzbuzzModel.fizzBuzz
+
     id: root
     color: "#262a2d"
-
     ColumnLayout {
         id: tableLayout
         anchors.fill: parent
@@ -28,13 +31,87 @@ Rectangle {
             Layout.fillWidth: true
         }
 
+        FizzBuzzModel{
+            id: fizzbuzzModel
+        }
+
         TableView {
             id: resultsTable
             Layout.fillHeight: true
             Layout.fillWidth: true
-            rowSpacing: 1
-            columnSpacing: 1
             clip: true
+            boundsBehavior: Flickable.StopAtBounds
+            model: fizzbuzzModel
+            delegate: DelegateChooser{
+                role: "tableData"
+                DelegateChoice{
+                    roleValue: "FizzBuzz"
+                    delegate: Rectangle{
+                        implicitHeight: 20
+                        implicitWidth: 100
+                        color: model.row % 2 === 0 ? "#303437" : "#262a2d"
+                        Label{
+                            anchors.fill: parent
+                            font{
+                                family: "Roboto"
+                                pixelSize: 16
+                            }
+                            color: "lightBlue"
+                            text: model.tableData
+                        }
+                    }
+                }
+                DelegateChoice{
+                    roleValue: "Fizz"
+                    delegate: Rectangle{
+                        implicitHeight: 20
+                        implicitWidth: 100
+                        color: model.row % 2 === 0 ? "#303437" : "#262a2d"
+                        Label{
+                            anchors.fill: parent
+                            font{
+                                family: "Roboto"
+                                pixelSize: 16
+                            }
+                            color: "orangered"
+                            text: model.tableData
+                        }
+                    }
+                }
+                DelegateChoice{
+                    roleValue: "Buzz"
+                    delegate: Rectangle{
+                        implicitHeight: 20
+                        implicitWidth: 100
+                        color: model.row % 2 === 0 ? "#303437" : "#262a2d"
+                        Label{
+                            anchors.fill: parent
+                            font{
+                                family: "Roboto"
+                                pixelSize: 16
+                            }
+                            color: "yellow"
+                            text: model.tableData
+                        }
+                    }
+                }
+                DelegateChoice{
+                    delegate: Rectangle{
+                        implicitHeight: 20
+                        implicitWidth: 100
+                        color: model.row % 2 === 0 ? "#303437" : "#262a2d"
+                        Label{
+                            anchors.fill: parent
+                            font{
+                                family: "Roboto"
+                                pixelSize: 16
+                            }
+                            color: "springgreen"
+                            text: model.tableData
+                        }
+                    }
+                }
+            }
         }
     }
 }
